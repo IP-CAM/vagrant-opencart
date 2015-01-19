@@ -19,14 +19,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.proxy.https    = ENV["https_proxy"]
     end
     if ENV["no_proxy"]
+      puts "no_proxy: " + ENV["no_proxy"]
       config.proxy.no_proxy = ENV["no_proxy"]
     end
   end
 
   config.vm.box = "ubuntu/trusty64"
-  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 80, host: 8082
   config.vm.synced_folder ".", "/var/www/opencart", type: "nfs"
-  config.vm.network "private_network", ip: "192.168.50.5"
+  config.vm.network "private_network", ip: "192.168.50.12"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
